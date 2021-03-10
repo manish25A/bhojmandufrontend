@@ -5,7 +5,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
-import Register from "../Body/Register";
+import Body from "../Body/Body";
 import Login from "../Body/Login";
 
 class Header extends Component<any> {
@@ -18,7 +18,7 @@ class Header extends Component<any> {
                             <Link to="/">Home</Link>
                         </li>
                         <li>
-                            <Link to="/register">Register</Link>
+                            <Link to="/body/register">Register</Link>
                         </li>
                         <li>
                             <Link to="/login">Login</Link>
@@ -35,8 +35,11 @@ class Header extends Component<any> {
           of them to render at a time
         */}
                     <Switch>
-                        <Route path="/register">
-                            <Register/>
+                        <Route path="/footer/home">
+                            <Footer/>
+                        </Route>
+                        <Route path="/body/register">
+                            <Body/>
                         </Route>
                         <Route path="/login">
                             <Login/>
