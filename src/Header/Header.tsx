@@ -1,4 +1,4 @@
-import {Component} from "react";
+import React, {Component} from "react";
 import {
     BrowserRouter as Router,
     Switch,
@@ -7,10 +7,13 @@ import {
 } from "react-router-dom";
 import Body from "../Body/Body";
 import Login from "../Body/Login";
+import Footer from "../Footer/footer"
+import Register from "../Body/Register";
 
 class Header extends Component<any> {
     render() {
         return (
+
             <Router>
                 <div>
                     <ul>
@@ -22,6 +25,11 @@ class Header extends Component<any> {
                         </li>
                         <li>
                             <Link to="/login">Login</Link>
+                        </li>
+                        <li>
+                            <Link to="/footer/home">
+                               Footer
+                            </Link>
                         </li>
                     </ul>
 
@@ -39,7 +47,7 @@ class Header extends Component<any> {
                             <Footer/>
                         </Route>
                         <Route path="/body/register">
-                            <Body/>
+                            <Register/>
                         </Route>
                         <Route path="/login">
                             <Login/>
