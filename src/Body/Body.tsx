@@ -8,7 +8,9 @@ class Body extends Component<any, any> {
         return (
             <Container>
                     {/*<Route path ='/register' component={Register}>*/}
-                    {/*    Register*/}
+                    {/* <Register>*/}
+
+                    {/* </Register>*/}
                     {/*</Route>*/}
             </Container>
         )
