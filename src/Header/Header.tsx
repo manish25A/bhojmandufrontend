@@ -1,11 +1,6 @@
 import React, {Component} from "react";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
-import Body from "../Body/Body";
+import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 import Login from "../Body/Login";
 import Footer from "../Footer/footer"
 import Register from "../Body/Register";
@@ -16,6 +11,18 @@ class Header extends Component<any> {
 
             <Router>
                 <div>
+                    <Navbar bg="dark" variant="dark">
+                        <Navbar.Brand href="/">Home</Navbar.Brand>
+                        <Nav className="mr-auto">
+                            <Nav.Link href="/body/Register">Register</Nav.Link>
+                            <Nav.Link href="/login">Features</Nav.Link>
+                            <Nav.Link href="#pricing">Pricing</Nav.Link>
+                        </Nav>
+                        <Form inline>
+                            <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
+                            <Button variant="outline-info">Search</Button>
+                        </Form>
+                    </Navbar>
                     <ul>
                         <li>
                             <Link to="/">Home</Link>
@@ -28,7 +35,7 @@ class Header extends Component<any> {
                         </li>
                         <li>
                             <Link to="/footer/home">
-                               Footer
+                                Footer
                             </Link>
                         </li>
                     </ul>
