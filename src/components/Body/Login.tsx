@@ -6,17 +6,19 @@ import axios from "axios";
 
 class Login extends Component<any, any> {
     state = {
-        customerEmail: "",
-        customerPassword: ""
+        email: "",
+        password: ""
     }
-    sendLoginInfo = () => {
+    sendLoginInfo = (e) => {
         const data = {
-            customerEmail: this.state.customerEmail,
-            customerPassword: this.state.customerPassword
+            email: this.state.email,
+            password: this.state.password
         }
-        axios.post("http://localhost:5000/customer/auth/login", data).then(res => {
-            console.log(res)
-            console.log(data)
+        e.preventDefault();
+        axios.post("http://localhost:4000/customer/auth/login", data)
+            .then(res => {
+              localStorage.setItem('token',res.data.token)
+              localStorage.setItem('id',res.data.id)
         })
     }
 
@@ -27,17 +29,17 @@ class Login extends Component<any, any> {
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="text" placeholder="Enter email"
-                                      value={this.state.customerEmail}
+                                      value={this.state.email}
                                       onChange={(event) => {
-                                          this.setState({customerEmail: event.target.value})
+                                          this.setState({email: event.target.value})
                                       }}/>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Enter password"
-                                      value={this.state.customerPassword}
+                                      value={this.state.password}
                                       onChange={(event) => {
-                                          this.setState({customerPassword: event.target.value})
+                                          this.setState({password: event.target.value})
                                       }}/>
                     </Form.Group>
                     <Button onClick={this.sendLoginInfo} >

@@ -23,7 +23,7 @@ class Register extends Component<any> {
             customerGender: this.state.customerGender,
             customerPassword: this.state.customerPassword
         }
-        axios.post("http://localhost:5000/customer/auth/register", data).then(res => {
+        axios.post("http://localhost:4000/customer/auth/register", data).then(res => {
             console.log(res)
             console.log(data)
         })
