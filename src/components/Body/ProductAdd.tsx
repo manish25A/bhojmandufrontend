@@ -18,6 +18,7 @@ class ProductAdd extends Component<any> {
             name: this.state.name,
             desc: this.state.desc,
             price: this.state.price,
+            vendorId:localStorage.getItem('id')
         }
         axios.post("http://localhost:4000/product/", data,this.state.config).then(res => {
             console.log(res)

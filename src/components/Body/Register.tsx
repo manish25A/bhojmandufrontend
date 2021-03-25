@@ -6,22 +6,20 @@ import axios from "axios";
 
 class Register extends Component<any> {
     state = {
-        customerFName: "",
-        customerLName: "",
-        customerEmail: "",
-        customerPassword: "",
-        customerPhone: "",
-        customerGender: ""
+        fname: "",
+        lname: "",
+        email: "",
+        password: "",
+
+    
 
     }
     sendUserInfo = () => {
         const data = {
-            customerFName: this.state.customerFName,
-            customerLName: this.state.customerLName,
-            customerEmail: this.state.customerEmail,
-            customerPhone: this.state.customerPhone,
-            customerGender: this.state.customerGender,
-            customerPassword: this.state.customerPassword
+            customerFName: this.state.fname,
+            customerLName: this.state.lname,
+            customerEmail: this.state.email,
+            customerPhone: this.state.password,
         }
         axios.post("http://localhost:5000/customer/auth/register", data).then(res => {
             console.log(res)
@@ -36,46 +34,32 @@ class Register extends Component<any> {
                 <Form.Group>
                     <Form.Label>CustomerFullName</Form.Label>
                     <Form.Control type="text" placeholder="Enter name"
-                                  value={this.state.customerFName}
+                                  value={this.state.fname}
                                   onChange={(event) => {
-                                      this.setState({customerFName: event.target.value})
+                                      this.setState({fname: event.target.value})
                                   }}/>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Last Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter age" value={this.state.customerLName}
+                    <Form.Control type="text" placeholder="Enter age" value={this.state.lname}
                                   onChange={(event) => {
-                                      this.setState({customerLName: event.target.value})
+                                      this.setState({lname: event.target.value})
                                   }}/>
 
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" value={this.state.customerEmail}
+                    <Form.Control type="email" placeholder="Enter email" value={this.state.email}
                                   onChange={(event) => {
-                                      this.setState({customerEmail: event.target.value})
+                                      this.setState({email: event.target.value})
                                   }}/>
 
                 </Form.Group>
                 <Form.Group >
-                    <Form.Label>Phone</Form.Label>
-                    <Form.Control type="text" placeholder="Enter phone" value={this.state.customerPhone}
+                    <Form.Label>password</Form.Label>
+                    <Form.Control type="password" placeholder="Enter password" value={this.state.password}
                                   onChange={(event) => {
-                                      this.setState({customerPhone: event.target.value})
-                                  }}/>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Gender</Form.Label>
-                    <Form.Control type="text" placeholder="Enter gender" value={this.state.customerGender}
-                                  onChange={(event) => {
-                                      this.setState({customerGender: event.target.value})
-                                  }}/>
-                </Form.Group>
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" value={this.state.customerPassword}
-                                  onChange={(event) => {
-                                      this.setState({customerPassword: event.target.value})
+                                      this.setState({password: event.target.value})
                                   }}/>
                 </Form.Group>
 
