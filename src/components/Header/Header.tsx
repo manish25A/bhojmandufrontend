@@ -42,7 +42,7 @@ function Header (){
         <nav className='navbar'>
           <div className='navbar-container'>
             <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-              <img alt="logo" src={logo} style={{width:100}}/>
+              <img alt="logo" src={logo} style={{width:100,height:80,marginTop:-18}}/>
               <i className='fab fa-typo3' />
             </Link>
             <div className='menu-icon' onClick={handleClick}>

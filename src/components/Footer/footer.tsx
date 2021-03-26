@@ -10,6 +10,7 @@ import Body from "../Body/Body";
 import Login from "../Body/Login";
 import Register from "../Body/Register";
 import './footer.css';
+import {getCurrentDate} from '../utils/getCurrentDate'
 
 class Footer extends Component<any> {
     render() {
@@ -73,11 +74,11 @@ class Footer extends Component<any> {
               <div className='social-media-wrap'>
                 <div className='footer-logo'>
                   <Link to='/' className='social-logo'>
-                    TRVL
+                    Bhojmandu
                     <i className='fab fa-typo3' />
                   </Link>
                 </div>
-                <small className='website-rights'>TRVL © 2020</small>
+                <small className='website-rights'>Bhojmandu © {getCurrentDate()}</small>
                 <div className='social-icons'>
                   <Link
                     class='social-icon-link facebook'
