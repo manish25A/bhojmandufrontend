@@ -1,27 +1,21 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Header from './components/Header/Header';
 import Body from './components/Body/Body';
 import Footer from './components/Footer/footer';
 import 'react-router-dom'
-import {BrowserRouter} from "react-router-dom";
-import NavBarApp from './components/Header/Navbar';
-
+import {BrowserRouter as Router} from "react-router-dom";
+import Navbar from './components/Header/Navbar/'
 
 function App() {
 
     return (
-        <BrowserRouter>
-
+        <Router>
             <div className="App">
-             <NavBarApp/>
-                {/* <Body>
-                </Body> */}
-
-                <Footer/>
+                 <Navbar/>
+                    
             </div>
-        </BrowserRouter>
+        </Router>
     );
 }
 

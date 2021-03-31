@@ -1,56 +1,56 @@
-import {Component} from "react";
-import {Container, Row, Col, Form, Button} from 'react-bootstrap'
-import Register from "./Register";
-import {Route} from "react-router";
-import axios from "axios";
-
-class Login extends Component<any, any> {
-    state = {
-        email: "",
-        password: ""
-    }
-    sendLoginInfo = (e) => {
-        const data = {
-            email: this.state.email,
-            password: this.state.password
-        }
-        e.preventDefault();
-        axios.post("http://localhost:4000/customer/auth/login", data)
-            .then(res => {
-              localStorage.setItem('token',res.data.token)
-              localStorage.setItem('id',res.data.id)
-        })
-    }
-
-    render() {
-        return (
-            <Container>
-                <Form>
-                    <Form.Group>
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type="text" placeholder="Enter email"
-                                      value={this.state.email}
-                                      onChange={(event) => {
-                                          this.setState({email: event.target.value})
-                                      }}/>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Enter password"
-                                      value={this.state.password}
-                                      onChange={(event) => {
-                                          this.setState({password: event.target.value})
-                                      }}/>
-                    </Form.Group>
-                    <Button onClick={this.sendLoginInfo} >
-                        Submit
-                    </Button>
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Form } from 'react-bootstrap';
+import logo from "../../images/logo1.png"
+export class Login extends Component {
+  render() {
+    return (
+      <div>
+        <div className="d-flex align-items-center auth px-0">
+          <div className="row w-100 mx-0">
+            <div className="col-lg-4 mx-auto">
+              <div className="auth-form-light text-left py-5 px-4 px-sm-5">
+                <div className="brand-logo">
+                <img alt="logo" src={logo} style={{width:100,height:80,marginTop:-18}}/>
+                </div>
+                <h4>Hello! let's get started</h4>
+                <h6 className="font-weight-light">Sign in to continue.</h6>
+                <Form className="pt-3">
+                  <Form.Group className="d-flex search-field">
+                    <Form.Control type="email" placeholder="Username" size="lg" className="h-auto" />
+                  </Form.Group>
+                  <Form.Group className="d-flex search-field">
+                    <Form.Control type="password" placeholder="Password" size="lg" className="h-auto" />
+                  </Form.Group>
+                  <div className="mt-3">
+                    <Link className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" to="/dashboard">SIGN IN</Link>
+                  </div>
+                  <div className="my-2 d-flex justify-content-between align-items-center">
+                    <div className="form-check">
+                      <label className="form-check-label text-muted">
+                        <input type="checkbox" className="form-check-input"/>
+                        <i className="input-helper"></i>
+                        Keep me signed in
+                      </label>
+                    </div>
+                    <a href="!#" onClick={event => event.preventDefault()} className="auth-link text-black">Forgot password?</a>
+                  </div>
+                  <div className="mb-2">
+                    <button type="button" className="btn btn-block btn-facebook auth-form-btn">
+                      <i className="mdi mdi-facebook mr-2"></i>Connect using facebook
+                    </button>
+                  </div>
+                  <div className="text-center mt-4 font-weight-light">
+                    Don't have an account? <Link to="/user-pages/register" className="text-primary">Create</Link>
+                  </div>
                 </Form>
-            </Container>
-        )
-    }
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>
+    )
+  }
 }
 
 export default Login
-
-

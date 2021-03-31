@@ -10,7 +10,7 @@ import Body from "../Body/Body";
 import Login from "../Body/Login";
 import Register from "../Body/Register";
 import './footer.css';
-import {getCurrentDate} from '../utils/getCurrentDate'
+import {getCurrentDate} from '../../utils/getCurrentDate'
 
 class Footer extends Component<any> {
     render() {
