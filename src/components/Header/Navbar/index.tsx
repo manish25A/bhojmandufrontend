@@ -19,10 +19,12 @@ const Navbar = () => {
      <>
      <Nav> 
          <NavbarContainer> 
-             <NavLogo to="/">Bhojmandu</NavLogo>
+             <NavLogo to="/">
+                 dollar
+             </NavLogo>
              <MobileIcon>
                  <FaBars/>
-            </MobileIcon>
+                 </MobileIcon>
              <NavMenu>
                  <NavItem>
                      <NavLinks to="/about" >About</NavLinks>
@@ -44,7 +46,7 @@ const Navbar = () => {
 {/* Switch code for navbar */}
      <Switch>
         <Route path="/about">
-
+        
          </Route>
         <Route path="/body/register">
         </Route>

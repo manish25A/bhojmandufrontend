@@ -8,27 +8,19 @@ import {
 from './SidebarElements'
 const Sidebar = () => {
     return (
-  <SidebarContainer>
-      <Icon>
-          <CloseIcon/>
-          </Icon>
-          <SidebarWrapper>
-              <SidebarMenu>
-                  <SidebarLink to="/about">
-                      About
-                  </SidebarLink>
-                  <SidebarLink to="/products">
-                      Product
-                  </SidebarLink>
-                  <SidebarLink to="/discover">
-                      Discover
-                  </SidebarLink>
-                  <SidebarLink to="/register">
-                      Register
-                  </SidebarLink>
-              </SidebarMenu>
-          </SidebarWrapper>
-      </SidebarContainer>
+ <SidebarContainer>
+    <Icon>
+       <CloseIcon/>
+    </Icon>
+    <SidebarWrapper>
+    <SidebarMenu>
+            <SidebarLink to="/about"> About</SidebarLink>
+            <SidebarLink to="/products">Product</SidebarLink>
+            <SidebarLink to="/discover">Discover</SidebarLink>
+            <SidebarLink to="/register">Register</SidebarLink>
+    </SidebarMenu>
+    </SidebarWrapper>
+</SidebarContainer>
     )
 }
 

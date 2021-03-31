@@ -98,7 +98,7 @@ border:none;
 cursor:pointer;
 transition:all 0.2s ease-in-out;
 text-decoration:none;
-text-align:center;
+
 
 
 &:hover{
@@ -106,6 +106,6 @@ text-align:center;
     background:#fff;
     color:#050e0e;
     text-decoration:none;
-
+    text-align:center;
 }
 `
