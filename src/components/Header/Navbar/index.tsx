@@ -1,112 +1,72 @@
-import React from 'react';
-import styled from 'styled-components';
-import logo from '../../../images/logo1.png';
-import { FaBars } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { Router, Switch, Route } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { links } from '../../../utils/constants';
-import CartButtons from './cartButtons';
-import { useProductsContext } from '../../../context/products_context';
-import { useUserContext } from '../../../context/user_context';
-const Navbar = () => {
-	const { openSidebar } = useProductsContext();
-	const { myUser } = useUserContext();
+import './Navbar.css';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import { IconContext } from 'react-icons/lib';
+import Register from '../../Body/Register';
+import logo from '../../../images/logo1.png';
+
+function Navbar() {
+	const [click, setClick] = useState(false);
+	const [button, setButton] = useState(true);
+
+	const handleClick = () => setClick(!click);
+	const closeMobileMenu = () => setClick(false);
+
 	return (
-		<NavContainer>
-			<div className='nav-center'>
-				<div className='nav-header'>
-					<Link to='/'>
-						<img src={logo} alt='comfy sloth' />
-					</Link>
-					<button type='button' className='nav-toggle' onClick={openSidebar}>
-						<FaBars />
-					</button>
-				</div>
-				<ul className='nav-links'>
-					{links.map((link) => {
-						const { id, text, url } = link;
-						return (
-							<li key={id}>
-								<Link to={url}>{text}</Link>
+		<>
+			<IconContext.Provider value={{ color: '#fff' }}>
+				<nav className='navbar'>
+					<div className='navbar-container container' onClick={handleClick}>
+						<Link to='/'>
+							<img src={logo} alt='bhojmandu' />
+						</Link>
+						<div className='menu-icon' onClick={handleClick}>
+							{click ? <FaTimes /> : <FaBars />}
+						</div>
+						<ul className={click ? 'nav-menu active' : 'nav-menu'}>
+							<li className='nav-item'>
+								<Link to='/' className='nav-links' onClick={closeMobileMenu}>
+									Home
+								</Link>
 							</li>
-						);
-					})}
-					{myUser && (
-						<li>
-							<Link to='/checkout'>checkout</Link>
-						</li>
-					)}
-				</ul>
-				<CartButtons />
-			</div>
-		</NavContainer>
+							<li className='nav-item'>
+								<Link
+									to='/body/register'
+									className='nav-links'
+									onClick={closeMobileMenu}
+								>
+									Register
+								</Link>
+							</li>
+							<li className='nav-item'>
+								<Link
+									to='/products'
+									className='nav-links'
+									onClick={closeMobileMenu}
+								>
+									Products
+								</Link>
+							</li>
+							<li className='nav-btn'>
+								{button ? (
+									<Link to='/body/login' className='btn-link'>
+										<Button>Login</Button>
+									</Link>
+								) : (
+									<Link to='/sign-up' className='btn-link'>
+										<Button onClick={closeMobileMenu}>SIGN UP</Button>
+									</Link>
+								)}
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</IconContext.Provider>
+		</>
 	);
-};
-
-const NavContainer = styled.nav`
-	height: 5rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	.nav-center {
-		width: 90vw;
-		margin: 0 auto;
-		max-width: var(--max-width);
-	}
-	.nav-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		img {
-			width: 175px;
-			margin-left: -15px;
-		}
-	}
-	.nav-toggle {
-		background: transparent;
-		border: transparent;
-		color: var(--clr-primary-5);
-		cursor: pointer;
-		svg {
-			font-size: 2rem;
-		}
-	}
-	.nav-links {
-		display: none;
-	}
-	.cart-btn-wrapper {
-		display: none;
-	}
-	@media (min-width: 992px) {
-		.nav-toggle {
-			display: none;
-		}
-		.nav-center {
-			display: grid;
-			grid-template-columns: auto 1fr auto;
-			align-items: center;
-		}
-		.nav-links {
-			display: flex;
-			justify-content: center;
-			li {
-				margin: 0 0.5rem;
-			}
-			a {
-				color: var(--clr-grey-3);
-				font-size: 1rem;
-				text-transform: capitalize;
-				letter-spacing: var(--spacing);
-				padding: 0.5rem;
-				&:hover {
-					border-bottom: 2px solid var(--clr-primary-7);
-				}
-			}
-		}
-		.cart-btn-wrapper {
-			display: grid;
-		}
-	}
-`;
+}
 
 export default Navbar;
