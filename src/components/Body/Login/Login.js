@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
-import logo from '../../images/logo1.png';
+import logo from '../../../images/logo1.png';
 export class Login extends Component {
 	render() {
 		return (

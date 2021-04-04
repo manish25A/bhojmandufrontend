@@ -4,8 +4,8 @@ import { Route } from 'react-router';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
-import logo from '../../images/logo1.png';
-class Register extends Component<any> {
+import logo from '../../../images/logo1.png';
+class Register extends Component {
 	state = {
 		fname: '',
 		lname: '',

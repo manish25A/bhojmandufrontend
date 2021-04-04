@@ -3,9 +3,9 @@ import { Router, Switch, Route } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import { FaBars, FaPlus, FaTimes } from 'react-icons/fa';
+import { FaBars, FaPlus, FaProductHunt, FaTimes } from 'react-icons/fa';
 import { IconContext } from 'react-icons/lib';
-import Register from '../../Body/Register';
+import Register from '../../Body/Register/index';
 import logo from '../../../images/logo1.png';
 import CartButtons from './CartButtons';
 import styled from 'styled-components';
@@ -50,6 +50,17 @@ function Navbar() {
 								</span>
 							</Link>
 							<Link
+								to='/get/product'
+								className='cart-btn'
+								onClick={handleClick}
+							>
+								Products
+								<span className='cart-container'>
+									<FaShoppingCart />
+									<span className='cart-value'>{3}</span>
+								</span>
+							</Link>
+							<Link
 								to='/body/login'
 								className='cart-btn'
 								onClick={closeMobileMenu}
@@ -59,6 +70,7 @@ function Navbar() {
 									<FaUserPlus />
 								</span>
 							</Link>
+
 							{/* <li className='nav-item'>
 								<Link
 									to='/products'
@@ -142,11 +154,6 @@ const NavContainer = styled.nav`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	align-items: center;
-
-	/* width: 225px; */
 
 	.nav-center {
 		width: 90vw;
@@ -160,7 +167,7 @@ const NavContainer = styled.nav`
 
 		img {
 			width: 175px;
-			height: 150px;
+			height: auto;
 			margin-left: -15px;
 		}
 	}
