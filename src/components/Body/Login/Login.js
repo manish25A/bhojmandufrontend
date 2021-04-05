@@ -1,9 +1,43 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import logo from '../../../images/logo1.png';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 export class Login extends Component {
+	state = {
+		email: '',
+		password: '',
+		LoginSucces: false,
+	};
+	changeHandler = (e) => {
+		this.setState({
+			[e.target.name]: e.target.value,
+		});
+	};
+	submitLogin = (e) => {
+		e.preventDefault();
+		axios
+			.post('http://localhost:4000/customer/auth/login', this.state)
+			.then((response) => {
+				console.log(response);
+				localStorage.setItem('token', response.data.token);
+				localStorage.setItem('id', response.data.id);
+				localStorage.setItem('role', response.data.role);
+				toast('Login Successful ');
+				window.location.href = '/';
+				this.setState({ LoginSucces: true });
+			})
+			.catch((err) => {
+				console.log(err.response);
+			});
+	};
+
 	render() {
+		const token = localStorage.getItem('token');
+		if (token) {
+			return <Redirect to='/' />;
+		}
 		return (
 			<div>
 				<div className='d-flex align-items-center auth px-0'>
@@ -23,9 +57,13 @@ export class Login extends Component {
 									<Form.Group className='d-flex search-field'>
 										<Form.Control
 											type='email'
-											placeholder='Username'
+											placeholder='email'
 											size='lg'
 											className='h-auto'
+											value={this.state.email}
+											onChange={(event) => {
+												this.setState({ email: event.target.value });
+											}}
 										/>
 									</Form.Group>
 									<Form.Group className='d-flex search-field'>
@@ -34,12 +72,16 @@ export class Login extends Component {
 											placeholder='Password'
 											size='lg'
 											className='h-auto'
+											value={this.state.password}
+											onChange={(event) => {
+												this.setState({ password: event.target.value });
+											}}
 										/>
 									</Form.Group>
 									<div className='mt-3'>
 										<Link
 											className='btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn'
-											to='/dashboard'
+											onClick={this.submitLogin}
 										>
 											SIGN IN
 										</Link>

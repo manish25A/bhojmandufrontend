@@ -96,6 +96,7 @@ function Navbar() {
 					</div>
 				</div>
 			</NavContainer>
+			<hr />
 
 			{/* <IconContext.Provider value={{ color: '#fff' }}>
 				<nav className='navbar'>

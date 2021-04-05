@@ -105,7 +105,7 @@ class Register extends Component {
 										<div className='mt-3'>
 											<Link
 												className='btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn'
-												to='/dashboard'
+												onClick={this.sendUserInfo}
 											>
 												SIGN UP
 											</Link>

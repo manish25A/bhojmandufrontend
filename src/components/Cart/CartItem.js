@@ -5,23 +5,16 @@ import AmountButtons from './AmountButtons';
 import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
 
 export const CartItem = ({ id, image, name, color, price, amount }) => {
-	// const { removeItem, toggleAmount } = useCartContext();
-	// const increase = () => {
-	// 	toggleAmount(id, 'inc');
-	// };
-	// const decrease = () => {
-	// 	toggleAmount(id, 'dec');
-	// };
 	return (
 		<Wrapper>
 			<div className='title'>
 				<img src={image} alt={name} />
 				<div>
 					<h5 className='name'>{name}</h5>
-					<p className='color'>
+					{/* <p className='color'>
 						color :
 						<span style={{ background: color }} />
-					</p>
+					</p> */}
 					<h5 className='price-small'>{formatPrice(price)}</h5>
 				</div>
 			</div>

@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { FaSearch } from 'react-icons/fa';
+
 export default class Products extends Component {
 	state = {
 		products: [],
@@ -29,7 +30,7 @@ export default class Products extends Component {
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:4000/product/')
+			.get('http://localhost:4000/vendor/auth')
 			.then((response) => {
 				console.log(response);
 				this.setState({
@@ -93,16 +94,16 @@ export default class Products extends Component {
 							return (
 								<Wrapper>
 									<div className='container'>
-										<img src={productDisplay.image} alt='image' />
+										<img src={productDisplay.image} alt='logo' />
 										<Link
-											to={`/single/product/${productDisplay._id}`}
+											to={`/single/product/${productDisplay.vendorName}`}
 											className='link'
 										>
 											<FaSearch />
 										</Link>
 									</div>
 									<footer>
-										<h5>{productDisplay.name}</h5>
+										<h5>{productDisplay.vendorName}</h5>
 										<p>{productDisplay.price}</p>
 									</footer>
 								</Wrapper>

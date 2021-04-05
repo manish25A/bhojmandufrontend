@@ -11,7 +11,7 @@ export function Home() {
 					<h1>
 						Bhojmandu <br />
 					</h1>
-					<p>This is a bhojmandu site</p>
+					<p>Get Your food cooked by our partners</p>
 					<Link to='/products' className='btn hero-btn'>
 						shop now
 					</Link>
