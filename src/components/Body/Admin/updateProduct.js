@@ -1,26 +1,35 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import { services } from '../../../utils/constants';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { AiOutlineQq } from 'react-icons/ai';
-import { FaAlgolia, FaRandom, FaReplyd, FaUpload } from 'react-icons/fa';
-export default class ResDashboard extends Component {
-	state = {
-		mydata: [],
+import { Component } from 'react';
 
+import axios from 'axios';
+import { PageHero } from './PageHero';
+import { FaUpload } from 'react-icons/fa';
+import styled from 'styled-components';
+class UpdateProducts extends Component {
+	state = {
+		name: '',
+		desc: '',
+		price: '',
+		id: this.props.match.params.id,
 		config: {
 			headers: {
 				authorization: `Bearer ${localStorage.getItem('resToken')}`,
 			},
 		},
-		vendorPassword: '',
+	};
+	sendUserInfo = () => {
+		const data = {
+			name: this.state.name,
+			price: this.state.price,
+			desc: this.state.desc,
+		};
+		axios
+			.put('http://localhost:4000/product/', data, this.state.config)
+			.then((res) => {});
 	};
 
 	componentDidMount() {
-		const token = this.state.config;
 		axios
-			.get('http://localhost:4000/vendor/auth/me', token)
+			.get('http://localhost:4000/product/', this.state.id, this.state.config)
 			.then((res) => {
 				console.log(res.data.data);
 				this.setState({
@@ -31,59 +40,28 @@ export default class ResDashboard extends Component {
 				// console.log(err.response);
 			});
 	}
-	update = (e) => {
-		const token = this.state.config;
-		const updatePassword = { vendorPassword: this.state.vendorPassword };
-		e.preventDefault();
-		console.log(updatePassword);
-		axios
-			.put('http://localhost:4000/vendor/auth/update', updatePassword, token)
-			.then((res) => {
-				console.log(res);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-
 	render() {
 		return (
 			<Wrapper>
 				<div className='section-center'>
 					<article className='header'>
-						<h3>
-							Welcome, {this.state.mydata.vendorName}
-							<br />
-						</h3>
-						<p>
-							See and update your the data. You cannot update some data because
-							of security reasons.
-						</p>
+						<h3>Update your products</h3>
 					</article>
 					<div className='services-center'>
 						<article className='service'>
-							<span className='icon'>
-								<AiOutlineQq />
-							</span>
 							<div className='content'>
 								<form>
-									<h3>
-										{this.state.mydata.vendorName},{' '}
-										{this.state.mydata.vendorAddress}
-										<br />
-									</h3>
 									<div className='form-control'>
 										<label>Email:&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; </label>
 										<input
 											type='text'
 											name='text'
-											value={this.state.mydata.vendorEmail}
+											value={this.state.mydata.name}
 											placeholder='email'
 											className='search-input'
 											onChange={(event) => {
-												this.setState({ vendorEmail: event.target.value });
+												this.setState({ name: event.target.value });
 											}}
-											disabled
 										/>
 									</div>{' '}
 									<div className='form-control'>
@@ -91,11 +69,11 @@ export default class ResDashboard extends Component {
 										<input
 											type='password'
 											name='password'
-											value={this.state.mydata.vendorPassword}
+											value={this.state.mydata.desc}
 											placeholder='password'
 											className='search-input'
 											onChange={(event) => {
-												this.setState({ vendorPassword: event.target.value });
+												this.setState({ desc: event.target.value });
 											}}
 										/>
 									</div>
@@ -277,3 +255,5 @@ const Wrapper = styled.article`
 		}
 	}
 `;
+
+export default UpdateProducts;

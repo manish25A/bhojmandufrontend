@@ -231,14 +231,15 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { FaPlusCircle } from 'react-icons/fa';
 import { formatPrice } from '../../../../utils/helpers';
-
+import { PageHero } from '../../Admin/PageHero';
 export default class Products extends Component {
 	state = {
+		activePage: 15,
 		products: [],
 		vendorName: this.props.match.params.id,
 		config: {
 			headers: {
-				authorization: `Bearer ${localStorage.getItem('token')}`,
+				authorization: `Bearer ${localStorage.getItem('customerToken')}`,
 			},
 		},
 	};
@@ -281,7 +282,9 @@ export default class Products extends Component {
 		return (
 			<>
 				<Wrapper className='page'>
-					<div className='products-container'>
+					<PageHero title='Products'></PageHero>
+
+					<div className='section-center products'>
 						<h4>{this.state.vendorName}</h4>
 						<p>{this.state.products.length} products found</p>
 
@@ -301,7 +304,7 @@ export default class Products extends Component {
 														{formatPrice(productDisplay.price)}
 													</h5>
 													<p>{productDisplay.desc.substring(0, 150)}...</p>
-													<div className='remov-btn'>
+													<p className='remove-btn'>
 														<ProductButton
 															className='btn'
 															onClick={this.addToCart.bind(
@@ -311,9 +314,12 @@ export default class Products extends Component {
 															// to={`/add/cart/${productDisplay._id}`}
 															// className='link'
 														>
-															<FaPlusCircle />
+															<span>
+																Add to cart
+																<FaPlusCircle />
+															</span>
 														</ProductButton>
-													</div>
+													</p>
 													<hr />
 												</div>
 											</article>
@@ -380,7 +386,7 @@ const Wrapper = styled.section`
 		margin-bottom: 0;
 	}
 	.btn {
-		font-size: 0.5rem;
+		font-size: 1rem;
 		padding: 0.25rem 0.5rem;
 	}
 	.remove-btn {
@@ -391,7 +397,6 @@ const Wrapper = styled.section`
 		background: var(--clr-red-dark);
 		width: 1.5rem;
 		height: 1.5rem;
-		display: flex;
 		right: 0;
 		align-items: center;
 		justify-content: right;

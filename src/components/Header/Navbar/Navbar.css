@@ -62,6 +62,7 @@
 
 .nav-item:hover {
 	border-bottom: 2px solid #f00946;
+	text-decoration: none;
 }
 
 .nav-links {
@@ -81,7 +82,7 @@
 	display: none;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 1080px) {
 	.NavbarItems {
 		position: relative;
 	}

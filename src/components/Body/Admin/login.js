@@ -6,8 +6,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 export class Login extends Component {
 	state = {
-		email: '',
-		password: '',
+		vendorEmail: '',
+		vendorPassword: '',
 		LoginSucces: false,
 	};
 	changeHandler = (e) => {
@@ -18,14 +18,13 @@ export class Login extends Component {
 	submitLogin = (e) => {
 		e.preventDefault();
 		axios
-			.post('http://localhost:4000/customer/auth/login', this.state)
+			.post('http://localhost:4000/vendor/auth/login', this.state)
 			.then((response) => {
 				console.log(response);
-				localStorage.setItem('customerToken', response.data.token);
+				localStorage.setItem('resToken', response.data.token);
 				localStorage.setItem('id', response.data.id);
-				localStorage.setItem('role', response.data.role);
 				toast('Login Successful ');
-				window.location.href = '/';
+				window.location.href = '/admin/dashboard';
 				this.setState({ LoginSucces: true });
 			})
 			.catch((err) => {
@@ -36,7 +35,7 @@ export class Login extends Component {
 	render() {
 		const token = localStorage.getItem('token');
 		if (token) {
-			return <Redirect to='/' />;
+			return <Redirect to='/admin/dashboard' />;
 		}
 		return (
 			<div>
@@ -51,7 +50,7 @@ export class Login extends Component {
 										style={{ width: 100, height: 80, marginTop: -18 }}
 									/>
 								</div>
-								<h4>Hello! let's get started</h4>
+								<h4>Hello Restaurant! let's get started</h4>
 								<h6 className='font-weight-light'>Sign in to continue.</h6>
 								<Form className='pt-3'>
 									<Form.Group className='d-flex search-field'>
@@ -60,9 +59,9 @@ export class Login extends Component {
 											placeholder='email'
 											size='lg'
 											className='h-auto'
-											value={this.state.email}
+											value={this.state.vendorEmail}
 											onChange={(event) => {
-												this.setState({ email: event.target.value });
+												this.setState({ vendorEmail: event.target.value });
 											}}
 										/>
 									</Form.Group>
@@ -72,9 +71,9 @@ export class Login extends Component {
 											placeholder='Password'
 											size='lg'
 											className='h-auto'
-											value={this.state.password}
+											value={this.state.vendorPassword}
 											onChange={(event) => {
-												this.setState({ password: event.target.value });
+												this.setState({ vendorPassword: event.target.value });
 											}}
 										/>
 									</Form.Group>
@@ -113,7 +112,7 @@ export class Login extends Component {
 									</div>
 									<div className='text-center mt-4 font-weight-light'>
 										Don't have an account?{' '}
-										<Link to='/body/register' className='text-primary'>
+										<Link to='/admin/register' className='text-primary'>
 											Create
 										</Link>
 									</div>

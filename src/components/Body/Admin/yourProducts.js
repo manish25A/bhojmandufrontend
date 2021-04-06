@@ -1,35 +1,24 @@
 import { Component } from 'react';
-import {
-	Row,
-	Col,
-	FormGroup,
-	Button,
-	input,
-	Container,
-	Form,
-} from 'react-bootstrap';
+
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import '../../assets/css/bootstrap.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './Cart.css';
+
 import CartColumns from './CartColumns';
 import PageHero from './PageHero';
-import { formatPrice } from '../../utils/helpers';
-import { FaTrash } from 'react-icons/fa';
+import { formatPrice } from '../../../utils/helpers';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
-export default class CartItem extends Component {
+export default class AdminProducts extends Component {
 	state = {
-		cartProduct: [],
-
+		products: [],
 		config: {
 			headers: {
-				authorization: `Bearer ${localStorage.getItem('customerToken')}`,
+				authorization: `Bearer ${localStorage.getItem('resToken')}`,
 			},
 		},
 	};
-
 	removeProduct = (id) => {
 		axios
 			.delete('http://localhost:4000/cart/' + id, this.state.config)
@@ -43,47 +32,45 @@ export default class CartItem extends Component {
 	};
 	componentDidMount() {
 		axios
-			.get('http://localhost:4000/cart/all', this.state.config)
-			.then((response) => {
+			.get('http://localhost:4000/product/admin/getProducts', this.state.config)
+			.then((res) => {
+				console.log(res.data.data);
 				this.setState({
-					cartProduct: response.data.data,
+					products: res.data.data,
 				});
 			})
 			.catch((err) => {
-				console.log(err.response);
+				// console.log(err.response);
 			});
 	}
 
 	render() {
 		return (
 			<main>
-				<PageHero title='cart' />
+				<PageHero title='Your products' />
 
 				<CartColumns />
-				{this.state.cartProduct.map((item) => {
-					var id = item._id;
+				{this.state.products.map((item) => {
 					return (
 						<Wrapper>
 							<div className='title'>
 								{/* <img src={image} alt={name} /> */}
 								<div>
-									<h5 className='name'>{item.customerId.fname}</h5>
+									<Link to={'update/' + item._id}>
+										<h5 className='name'>{item.name}</h5>
+									</Link>
+
 									{/* <p className='color'>
 										color :
 										<span style={{ background: color }} />
 									</p> */}
-									<h5 className='price-small'>
-										{formatPrice(item.itemId.price)}
-									</h5>
+									<h5 className='price-small'>{formatPrice(item.price)}</h5>
 								</div>
 							</div>
-							<h5 className='price'>{formatPrice(item.itemId.price)}</h5>
-							{/* <AmountButtons
-								amount={amount}
-								increase={increase}
-								decrease={decrease}
-							/> */}
-							<h5 className='subtotal'>{formatPrice(item.itemId.price * 1)}</h5>
+							<h5 className='price'>{formatPrice(item.price)}</h5>
+
+							<h5 className='subtotal'>{formatPrice(item.price * 1)}</h5>
+
 							<button
 								className='remove-btn'
 								onClick={this.removeProduct.bind(this, item._id)}
@@ -94,80 +81,6 @@ export default class CartItem extends Component {
 					);
 				})}
 				<hr />
-
-				{/* <CartTotals /> */}
-				{/* <div class='cartItem'>
-					<div class='cart_section'>
-						<div class='container-fluid'>
-							<div class='row'>
-								<div class='col-lg-10 offset-lg-1'>
-									<div class='cart_title'>Shopping Cart</div>
-
-									{this.state.cartProduct.map((productdata) => {
-										return (
-											<div class='cart_container'>
-												<div class='cart_items'>
-													<ul class='cart_list'>
-														<li class='cart_item clearfix'>
-															<div class='cart_item_image'>
-																{/* <img
-																src={
-																	'http://localhost:90/' +
-																	productdata.CartItemid.ProductImage
-																}
-																alt={productdata.CartItemid.ProductImage}
-																class='rounded'
-																width='200'
-																height='120'
-															/> */}
-				{/* </div>
-
-															<div class='cart_item_info d-flex flex-md-row flex-column justify-content-between'>
-																<div class='cart_item_name cart_info_col'>
-																	<div class='cart_item_title'>Name</div>
-																	<div class='cart_item_text'>
-																		{productdata.itemId.desc}
-																	</div>
-																</div>
-																<div class='cart_item_color cart_info_col'>
-																	<div class='cart_item_title'>Color</div>
-																	<div class='cart_item_text'>
-																		<span style={{ mystyle }}></span>
-																		{productdata.itemId.name}
-																	</div>
-																</div>
-															</div>
-														</li>
-													</ul>
-												</div>
-												<div class='cart_buttons'>
-													{' '}
-													<button
-														type='button'
-														class='button cart_button_clear'
-														onClick={this.deleteProduct.bind(
-															this,
-															productdata._id
-														)}
-													>
-														{' '}
-														Delete Item
-													</button>{' '}
-													<button
-														type='button'
-														class='button cart_button_checkout'
-													>
-														Proceed To Checkout
-													</button>{' '}
-												</div>
-											</div>
-										);
-									})}
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> */}
 			</main>
 		);
 	}
@@ -198,8 +111,14 @@ export const Wrapper = styled.main`
 		display: grid;
 		grid-template-columns: 75px 125px;
 		align-items: center;
-		text-align: left;
+		justify-items: center;
 		gap: 1rem;
+	}
+	@media (max-width: 776px) {
+		.title {
+			margin-left: 10rem;
+			align-items: center;
+		}
 	}
 	img {
 		width: 100%;
@@ -290,6 +209,7 @@ export const Wrapper = styled.main`
 		grid-template-columns: 1fr 1fr 1fr 1fr auto;
 		align-items: center;
 		grid-template-rows: 75px;
+
 		img {
 			height: 100%;
 		}
@@ -300,17 +220,7 @@ export const Wrapper = styled.main`
 			align-items: center;
 			gap: 1rem;
 			text-align: left;
-		}
-		.amount-btns {
-			width: 100px;
-			button {
-				width: 1.5rem;
-				height: 1rem;
-				font-size: 1rem;
-			}
-			h2 {
-				font-size: 1.5rem;
-			}
+			margin-bottom: 100px;
 		}
 	}
 `;

@@ -10,7 +10,7 @@ export default class Dashboard extends Component {
 		mydata: [],
 		config: {
 			headers: {
-				authorization: `Bearer ${localStorage.getItem('token')}`,
+				authorization: `Bearer ${localStorage.getItem('customerToken')}`,
 			},
 		},
 	};
@@ -41,7 +41,7 @@ export default class Dashboard extends Component {
 						</h3>
 						<p>
 							See and update your the data. You cannot update some data because
-							of some important reasons .
+							of security reasons .
 						</p>
 					</article>
 					<div className='services-center'>
@@ -70,7 +70,7 @@ export default class Dashboard extends Component {
 									<div className='form-control'>
 										<label>Password</label>
 										<input
-											type='text'
+											type='password'
 											name='text'
 											value={this.state.password}
 											placeholder='password'

@@ -3,7 +3,16 @@ import { Router, Switch, Route } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import { FaBars, FaPlus, FaProductHunt, FaTimes } from 'react-icons/fa';
+import {
+	FaAd,
+	FaBars,
+	FaDatabase,
+	FaPalfed,
+	FaPlus,
+	FaProductHunt,
+	FaSitemap,
+	FaTimes,
+} from 'react-icons/fa';
 import { IconContext } from 'react-icons/lib';
 import Register from '../../Body/Register/index';
 import logo from '../../../images/logo1.png';
@@ -22,9 +31,13 @@ function Navbar() {
 
 	const handleClick = () => setClick(!click);
 	const closeMobileMenu = () => setClick(false);
-	const token = localStorage.getItem('token');
-
-	return !token ? (
+	const customerToken = localStorage.getItem('customerToken');
+	const resToken = localStorage.getItem('resToken');
+	const logout = () => {
+		localStorage.clear();
+		window.location.href = '/';
+	};
+	return !customerToken && !resToken ? (
 		<>
 			<NavContainer>
 				<div className='nav-center'>
@@ -43,22 +56,21 @@ function Navbar() {
 									<FaCentos />
 								</span>
 							</Link>
-							<Link to='/cart' className='cart-btn' onClick={handleClick}>
+							{/* <Link to='/cart' className='cart-btn' onClick={handleClick}>
 								Cart
 								<span className='cart-container'>
 									<FaShoppingCart />
 									<span className='cart-value'>{3}</span>
 								</span>
-							</Link>
+							</Link> */}
 							<Link
 								to='/get/product'
 								className='cart-btn'
 								onClick={handleClick}
 							>
-								Products
+								Restaurants
 								<span className='cart-container'>
 									<FaShoppingCart />
-									<span className='cart-value'>{3}</span>
 								</span>
 							</Link>
 							<Link
@@ -71,84 +83,71 @@ function Navbar() {
 									<FaUserPlus />
 								</span>
 							</Link>
-
-							{/* <li className='nav-item'>
-								<Link
-									to='/products'
-									className='nav-links'
-									onClick={closeMobileMenu}
-								>
-									Products
-								</Link>
-							</li> */}
-							{/* <CartButtons /> */}
-							{/* <li className='nav-btn'>
-								{button ? (
-									<Link to='/body/login' className='btn-link'>
-										<Button>Login</Button>
-									</Link>
-								) : (
-									<Link to='/sign-up' className='btn-link'>
-										<Button onClick={closeMobileMenu}>SIGN UP</Button>
-									</Link>
-								)}
-							</li> */}
 						</ul>
 					</div>
 				</div>
 			</NavContainer>
 			<hr />
-
-			{/* <IconContext.Provider value={{ color: '#fff' }}>
-				<nav className='navbar'>
-					<div className='navbar-container container' onClick={handleClick}>
+		</>
+	) : resToken && !customerToken ? (
+		<>
+			<NavContainer>
+				<div className='nav-center'>
+					<div className='nav-header' onClick={handleClick}>
 						<Link to='/'>
 							<img src={logo} alt='bhojmandu' />
 						</Link>
+
 						<div className='menu-icon' onClick={handleClick}>
 							{click ? <FaTimes /> : <FaBars />}
 						</div>
 						<ul className={click ? 'nav-menu active' : 'nav-menu'}>
-							<li className='nav-item'>
-								<Link to='/' className='nav-links' onClick={closeMobileMenu}>
-									Home
-								</Link>
-							</li>
-							<li className='nav-item'>
-								<Link
-									to='/body/register'
-									className='nav-links'
-									onClick={closeMobileMenu}
-								>
-									Register
-								</Link>
-							</li>
-							<li className='nav-item'>
-								<Link
-									to='/products'
-									className='nav-links'
-									onClick={closeMobileMenu}
-								>
-									Products
-								</Link>
-							</li>
-							<li className='nav-btn'>
-								{button ? (
-									<Link to='/body/login' className='btn-link'>
-										<Button>Login</Button>
-									</Link>
-								) : (
-									<Link to='/sign-up' className='btn-link'>
-										<Button onClick={closeMobileMenu}>SIGN UP</Button>
-									</Link>
-								)}
-							</li>
+							<Link to='/' className='cart-btn' onClick={closeMobileMenu}>
+								Home
+								<span className='cart-container'>
+									<FaCentos />
+								</span>
+							</Link>
+							<Link
+								to='/admin/insert/products'
+								className='cart-btn'
+								onClick={handleClick}
+							>
+								Insert Products
+							</Link>
+							<Link
+								to='/admin/product'
+								className='cart-btn'
+								onClick={handleClick}
+							>
+								Your products
+								<span className='cart-container'>
+									<FaPalfed />
+								</span>
+							</Link>
+							<Link
+								to='/admin/dashboard'
+								className='cart-btn'
+								onClick={closeMobileMenu}
+							>
+								Dashboard
+								<span className='cart-container'>
+									<FaUserPlus />
+								</span>
+							</Link>
+							<Link to='/user/logout' className='cart-btn' onClick={logout}>
+								Logout
+								<span className='cart-container'>
+									<FaUserMinus />
+								</span>
+							</Link>
 						</ul>
 					</div>
-				</nav>
-			</IconContext.Provider> */}
+				</div>
+			</NavContainer>
+			<hr />
 		</>
-	) : (
+	) : customerToken && !resToken ? (
 		<>
 			<NavContainer>
 				<div className='nav-center'>
@@ -189,50 +188,27 @@ function Navbar() {
 								to='/user/dashboard'
 								className='cart-btn'
 								onClick={closeMobileMenu}
+								cus
 							>
 								Dashboard
 								<span className='cart-container'>
 									<FaUserPlus />
 								</span>
 							</Link>
-							<Link
-								to='/user/logout'
-								className='cart-btn'
-								onClick={closeMobileMenu}
-							>
+							<Link to='/user/logout' className='cart-btn' onClick={logout}>
 								Logout
 								<span className='cart-container'>
 									<FaUserMinus />
 								</span>
 							</Link>
-
-							{/* <li className='nav-item'>
-								<Link
-									to='/products'
-									className='nav-links'
-									onClick={closeMobileMenu}
-								>
-									Products
-								</Link>
-							</li> */}
-							{/* <CartButtons /> */}
-							{/* <li className='nav-btn'>
-								{button ? (
-									<Link to='/body/login' className='btn-link'>
-										<Button>Login</Button>
-									</Link>
-								) : (
-									<Link to='/sign-up' className='btn-link'>
-										<Button onClick={closeMobileMenu}>SIGN UP</Button>
-									</Link>
-								)}
-							</li> */}
 						</ul>
 					</div>
 				</div>
 			</NavContainer>
 			<hr />
 		</>
+	) : (
+		<div>errro</div>
 	);
 }
 
