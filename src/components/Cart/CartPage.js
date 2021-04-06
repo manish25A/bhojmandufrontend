@@ -55,6 +55,7 @@ export default class CartItem extends Component {
 				console.log(err.response);
 			});
 	}
+
 	render() {
 		return (
 			<main>
@@ -173,7 +174,6 @@ export default class CartItem extends Component {
 		);
 	}
 }
-
 export const Wrapper = styled.main`
 	.empty {
 		text-align: center;

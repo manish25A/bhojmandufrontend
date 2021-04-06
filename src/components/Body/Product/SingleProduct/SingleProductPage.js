@@ -276,28 +276,7 @@ export default class Products extends Component {
 				toast.error(err.response.data.message);
 			});
 	};
-	addToFav = (id, event) => {
-		event.preventDefault();
-		axios
-			.post(
-				'http://localhost:4000/favouriteitem/insert/' + id,
-				{},
-				this.state.config
-			)
-			.then((response) => {
-				if (response.data.success) {
-					console.log(response.data.message);
-					toast.success(response.data.message, {
-						autoClose: 1000,
-					});
-				} else {
-					toast.error(response.data.message);
-				}
-			})
-			.catch((err) => {
-				toast.error(err.response.data.message);
-			});
-	};
+
 	render() {
 		return (
 			<>

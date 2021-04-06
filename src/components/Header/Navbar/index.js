@@ -22,8 +22,9 @@ function Navbar() {
 
 	const handleClick = () => setClick(!click);
 	const closeMobileMenu = () => setClick(false);
+	const token = localStorage.getItem('token');
 
-	return (
+	return !token ? (
 		<>
 			<NavContainer>
 				<div className='nav-center'>
@@ -146,6 +147,91 @@ function Navbar() {
 					</div>
 				</nav>
 			</IconContext.Provider> */}
+		</>
+	) : (
+		<>
+			<NavContainer>
+				<div className='nav-center'>
+					<div className='nav-header' onClick={handleClick}>
+						<Link to='/'>
+							<img src={logo} alt='bhojmandu' />
+						</Link>
+
+						<div className='menu-icon' onClick={handleClick}>
+							{click ? <FaTimes /> : <FaBars />}
+						</div>
+						<ul className={click ? 'nav-menu active' : 'nav-menu'}>
+							<Link to='/' className='cart-btn' onClick={closeMobileMenu}>
+								Home
+								<span className='cart-container'>
+									<FaCentos />
+								</span>
+							</Link>
+							<Link to='/cart' className='cart-btn' onClick={handleClick}>
+								Cart
+								<span className='cart-container'>
+									<FaShoppingCart />
+									<span className='cart-value'>{3}</span>
+								</span>
+							</Link>
+							<Link
+								to='/get/product'
+								className='cart-btn'
+								onClick={handleClick}
+							>
+								Products
+								<span className='cart-container'>
+									<FaShoppingCart />
+									<span className='cart-value'>{3}</span>
+								</span>
+							</Link>
+							<Link
+								to='/user/dashboard'
+								className='cart-btn'
+								onClick={closeMobileMenu}
+							>
+								Dashboard
+								<span className='cart-container'>
+									<FaUserPlus />
+								</span>
+							</Link>
+							<Link
+								to='/user/logout'
+								className='cart-btn'
+								onClick={closeMobileMenu}
+							>
+								Logout
+								<span className='cart-container'>
+									<FaUserMinus />
+								</span>
+							</Link>
+
+							{/* <li className='nav-item'>
+								<Link
+									to='/products'
+									className='nav-links'
+									onClick={closeMobileMenu}
+								>
+									Products
+								</Link>
+							</li> */}
+							{/* <CartButtons /> */}
+							{/* <li className='nav-btn'>
+								{button ? (
+									<Link to='/body/login' className='btn-link'>
+										<Button>Login</Button>
+									</Link>
+								) : (
+									<Link to='/sign-up' className='btn-link'>
+										<Button onClick={closeMobileMenu}>SIGN UP</Button>
+									</Link>
+								)}
+							</li> */}
+						</ul>
+					</div>
+				</div>
+			</NavContainer>
+			<hr />
 		</>
 	);
 }

@@ -13,6 +13,7 @@ import HomePage from './components/Body/Home';
 import CartPage from './components/Cart/CartPage';
 import Products from './components/Body/Product/';
 import SingleProductPage from './components/Body/Product/SingleProduct/SingleProductPage';
+import Dashboard from './components/Dashboard';
 // import GetProducts from './components/GetProducts/GetProducts';
 
 // import { App as product } from './components/GetProducts/app';
@@ -29,7 +30,9 @@ function App() {
 				<Route exact path='/cart' component={CartPage} />
 
 				<Route exact path='/get/product' component={Products} />
+				<Route exact path='/user/dashboard' component={Dashboard} />
 				<Route exact path='/single/product/:id' component={SingleProductPage} />
+
 				<Footer />
 			</div>
 		</Router>
