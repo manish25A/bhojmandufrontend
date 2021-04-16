@@ -1,0 +1,48 @@
+.card {
+  border: none;
+  border-radius: 0px;
+  background-color: #fff;
+}
+
+.text1 {
+  font-size: 13px;
+  color: #cbcbcb;
+}
+
+.info {
+  line-height: 17px;
+}
+
+.cost span {
+  color: #fb3531;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.star {
+  color: #fbc02d;
+}
+
+.watchcost span {
+  color: #286783;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.watch {
+  background: #286783;
+}
+
+.tshirtcost span {
+  color: #0012b2;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.tshirt {
+  background-color: #0012b2;
+}
+
+.cursor {
+  cursor: pointer;
+}
