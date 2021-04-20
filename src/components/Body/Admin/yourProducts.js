@@ -56,21 +56,17 @@ export default class AdminProducts extends Component {
 							<div className='title'>
 								{/* <img src={image} alt={name} /> */}
 								<div>
-									<Link to={'update/' + item._id}>
+									<Link to={`/admin/update/${item._id}`}>
 										<h5 className='name'>{item.name}</h5>
 									</Link>
 
-									{/* <p className='color'>
-										color :
-										<span style={{ background: color }} />
-									</p> */}
+			
 									<h5 className='price-small'>{formatPrice(item.price)}</h5>
 								</div>
 							</div>
 							<h5 className='price'>{formatPrice(item.price)}</h5>
 
-							<h5 className='subtotal'>{formatPrice(item.price * 1)}</h5>
-
+							<h5 className='subtotal'>{(item.desc)}</h5>
 							<button
 								className='remove-btn'
 								onClick={this.removeProduct.bind(this, item._id)}

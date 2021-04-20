@@ -7,24 +7,40 @@ import axios from 'axios';
 import logo from '../../../images/logo1.png';
 class Register extends Component {
 	state = {
+		photo:'',
 		vendorName: '',
 		vendorEmail: '',
 		vendorPassword: '',
 		vendorAddress: '',
 	};
-	sendUserInfo = () => {
-		const data = {
-			vendorName: this.state.vendorName,
-			vendorEmail: this.state.vendorEmail,
-			vendorPassword: this.state.vendorPassword,
-			vendorAddress: this.state.vendorAddress,
-		};
+	imageHandler = (e) => {
+		this.setState({
+		  photo: e.target.files[0],
+		});
+	  };
+	sendUserInfo = (e) => {
+
+		e.preventDefault();
+
+		const formData= new FormData();
+		formData.append('photo', this.state.photo)
+		formData.append('vendorName', this.state.vendorName)
+		formData.append('vendorEmail', this.state.vendorEmail)
+		formData.append('vendorPassword', this.state.vendorPassword)
+		formData.append('vendorAddress', this.state.vendorAddress)
+
+		const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+
+		
 		axios
-			.post('http://localhost:4000/vendor/auth/register', data)
+			.post('http://localhost:4000/vendor/auth/register', formData, config)
 			.then((res) => {
 				window.location.href = '/admin/login';
 				console.log(res);
-				console.log(data);
 			});
 	};
 
@@ -48,6 +64,17 @@ class Register extends Component {
 									selling your products
 								</h6>
 								<form className='pt-3'>
+									<div className='form-group'>
+										<input
+											type='file'
+											className='form-control form-control-lg'
+											id='exampleInputUsername1'
+											placeholder='Photo of restaurant'
+											name="photo"
+											onChange={this.imageHandler}
+
+										/>
+									</div>
 									<div className='form-group'>
 										<input
 											type='text'

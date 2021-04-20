@@ -1,259 +1,151 @@
 import { Component } from 'react';
-
 import axios from 'axios';
-import { PageHero } from './PageHero';
-import { FaUpload } from 'react-icons/fa';
-import styled from 'styled-components';
-class UpdateProducts extends Component {
+
+import { toast } from 'react-toastify';
+
+toast.configure();
+export default class EditProduct extends Component {
 	state = {
-		name: '',
-		desc: '',
-		price: '',
-		id: this.props.match.params.id,
+		singleProduct: {},
 		config: {
 			headers: {
 				authorization: `Bearer ${localStorage.getItem('resToken')}`,
 			},
 		},
+		id: this.props.match.params.id,
+		name: '',
+		desc: '',
+		price: '',
 	};
-	sendUserInfo = () => {
-		const data = {
+	updateProduct = (e) => {
+		e.preventDefault();
+		const updateProductData = {
 			name: this.state.name,
-			price: this.state.price,
 			desc: this.state.desc,
+			price: this.state.price,
 		};
+		console.log(updateProductData);
 		axios
-			.put('http://localhost:4000/product/', data, this.state.config)
-			.then((res) => {});
-	};
-
-	componentDidMount() {
-		axios
-			.get('http://localhost:4000/product/', this.state.id, this.state.config)
-			.then((res) => {
-				console.log(res.data.data);
-				this.setState({
-					mydata: res.data.data,
+			.put(
+				'http://localhost:4000/product/update/' + this.state.id,
+				updateProductData,
+				this.state.config
+			)
+			.then((response) => {
+				toast.success('Successfully Updated Product', {
+					draggable: true,
+					autoClose: 3000,
+					position: toast.POSITION.TOP_RIGHT,
 				});
 			})
 			.catch((err) => {
-				// console.log(err.response);
+				console.log(err.response);
+				toast.warn('Unable Updated Product', {
+					draggable: true,
+					autoClose: 3000,
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			});
+	};
+	componentDidMount() {
+		console.log(this.state.id);
+		axios
+			.get('http://localhost:4000/product/' + this.state.id, this.state.config)
+			.then((res) => {
+				console.log(res);
+				console.log(res.data.data.name);
+				this.setState({
+					name: res.data.data.name,
+					desc: res.data.data.desc,
+					price: res.data.data.price,
+				});
+			})
+			.catch((err) => {
+				console.log(err.res);
 			});
 	}
+
 	render() {
 		return (
-			<Wrapper>
-				<div className='section-center'>
-					<article className='header'>
-						<h3>Update your products</h3>
-					</article>
-					<div className='services-center'>
-						<article className='service'>
-							<div className='content'>
-								<form>
-									<div className='form-control'>
-										<label>Email:&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; </label>
-										<input
-											type='text'
-											name='text'
-											value={this.state.mydata.name}
-											placeholder='email'
-											className='search-input'
-											onChange={(event) => {
-												this.setState({ name: event.target.value });
-											}}
-										/>
-									</div>{' '}
-									<div className='form-control'>
-										<label>Password</label>
-										<input
-											type='password'
-											name='password'
-											value={this.state.mydata.desc}
-											placeholder='password'
-											className='search-input'
-											onChange={(event) => {
-												this.setState({ desc: event.target.value });
-											}}
-										/>
-									</div>
-								</form>
+			<div class='container tm-mt-big tm-mb-big'>
+				<div class='row'>
+					<div class='col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto'>
+						<div class='tm-bg-primary-dark tm-block tm-block-h-auto'>
+							<div class='row'>
+								<div class='col-12'>
+									<h2 class='tm-block-title d-inline-block'>Update Product</h2>
+								</div>
 							</div>
+							<div class='row tm-edit-product-row'>
+								<div class='col-xl-6 col-lg-6 col-md-12'>
+									<form action='' class='tm-edit-product-form'>
+										<div class='form-group mb-3'>
+											<label for='ProductName'>Product Name</label>
+											<input
+												name='ProductName'
+												type='text'
+												class='form-control validate'
+												placeholder='Insert Product Name'
+												required
+												value={this.state.name}
+												onChange={(event) =>
+													this.setState({ name: event.target.value })
+												}
+											/>
+										</div>
 
-							<p>
-								<button className='remove-btn' onClick={this.update}>
-									<FaUpload />
-								</button>
-							</p>
-							<p>Created at: &nbsp;{this.state.mydata.createdAt}</p>
-						</article>
+										<div class='row'>
+											<div class='form-group mb-3 col-xs-12 col-sm-6'>
+												<label for='Price'>Price</label>
+												<input
+													id='ProductPrice'
+													name='ProductPrice'
+													type='text'
+													class='form-control validate'
+													data-large-mode='true'
+													placeholder='Insert Product Price'
+													value={this.state.price}
+													onChange={(event) =>
+														this.setState({ price: event.target.value })
+													}
+												/>
+											</div>
+
+											<div class='form-group mb-3'>
+												<label for='ProductDescription'>Description</label>
+												<textarea
+													id='ProductDescription'
+													name='ProductDescription'
+													type='text'
+													class='form-control validate'
+													rows='3'
+													required
+													value={this.state.desc}
+													onChange={(event) =>
+														this.setState({
+															desc: event.target.value,
+														})
+													}
+												></textarea>
+											</div>
+										</div>
+										<div class='col-12'>
+											<button
+												type='submit'
+												class='btn btn-primary btn-block text-uppercase'
+												onClick={this.updateProduct}
+											>
+												Update Product Now
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 					</div>
+					<h2></h2>
 				</div>
-			</Wrapper>
+			</div>
 		);
 	}
 }
-
-const Wrapper = styled.article`
-	.form-control {
-		background: var(--clr-primary-7);
-		border-color: var(--clr-primary-7);
-		margin-bottom: 1.25rem;
-		h5 {
-			margin-bottom: 0.5rem;
-		}
-	}
-	.search-input {
-		padding: 0.5rem;
-		background: var(--clr-grey-10);
-		border-radius: var(--radius);
-		border-color: transparent;
-		letter-spacing: var(--spacing);
-	}
-	.search-input::placeholder {
-		text-transform: capitalize;
-		background: var(--clr-grey-10);
-	}
-	.container {
-		position: relative;
-		background: var(--clr-black);
-		border-radius: var(--radius);
-	}
-	.service {
-		background: var(--clr-primary-7);
-		text-align: center;
-		padding: 2.5rem 2rem;
-		border-radius: var(--radius);
-		position: relative;
-		p {
-			color: var(--clr-primary-2);
-		}
-	}
-	.remove-btn {
-		color: var(--clr-white);
-		background: transparent;
-		border: transparent;
-		letter-spacing: var(--spacing);
-		background: var(--clr-primary-2);
-		width: 4rem;
-		height: 4rem;
-		align-items: center;
-		justify-content: center;
-		border-radius: var(--radius);
-		font-size: 0.75rem;
-		cursor: pointer;
-	}
-	@media (min-width: 576px) {
-		.services-center {
-			grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-		}
-	}
-	@media (min-width: 1280px) {
-		padding: 0;
-		.section-center {
-			transform: translateY(5rem);
-		}
-	}
-	h3,
-	h4 {
-		color: var(--clr-primary-1);
-	}
-	padding: 5rem 0;
-
-	background: var(--clr-primary-10);
-	.header h3 {
-		margin-bottom: 2rem;
-	}
-	.services-center {
-		margin-top: 4rem;
-		display: grid;
-		gap: 2.5rem;
-		margin-bottom: 20px;
-	}
-	span {
-		width: 4rem;
-		height: 4rem;
-		display: grid;
-		margin: 0 auto;
-		place-items: center;
-		margin-bottom: 1rem;
-		border-radius: 50%;
-		background: var(--clr-primary-10);
-		color: var(--clr-primary-1);
-		svg {
-			font-size: 2rem;
-		}
-	}
-	img {
-		width: 100%;
-		display: block;
-		object-fit: cover;
-		border-radius: var(--radius);
-		transition: var(--transition);
-	}
-	.link {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		background: var(--clr-primary-5);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.5rem;
-		height: 2.5rem;
-		border-radius: 50%;
-		transition: var(--transition);
-		opacity: 0;
-		cursor: pointer;
-		svg {
-			font-size: 1.25rem;
-			color: var(--clr-white);
-		}
-	}
-	.container:hover img {
-		opacity: 0.5;
-	}
-	.container:hover .link {
-		opacity: 1;
-	}
-	footer {
-		margin-top: 1rem;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-	footer h5,
-	footer p {
-		margin-bottom: 0;
-		font-weight: 400;
-	}
-
-	footer p {
-		color: var(--clr-primary-5);
-		letter-spacing: var(--spacing);
-	}
-	img {
-		height: 200px;
-	}
-
-	.products-container {
-		display: grid;
-		gap: 2rem 1.5rem;
-	}
-
-	@media (min-width: 992px) {
-		.products-container {
-			grid-template-columns: repeat(2, 1fr);
-		}
-		.img {
-		}
-	}
-	@media (min-width: 1170px) {
-		.products-container {
-			grid-template-columns: repeat(3, 1fr);
-		}
-	}
-`;
-
-export default UpdateProducts;

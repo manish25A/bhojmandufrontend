@@ -21,10 +21,13 @@ export class Login extends Component {
 			.post('http://localhost:4000/vendor/auth/login', this.state)
 			.then((response) => {
 				console.log(response);
-				localStorage.setItem('resToken', response.data.token);
+				localStorage.setItem('resToken', response.data.vendorToken);
+				localStorage.setItem('customerToken', response.data.token);
 				localStorage.setItem('id', response.data.id);
 				toast('Login Successful ');
-				window.location.href = '/admin/dashboard';
+				if (response.data.vendorToken) {
+					window.location.href = '/admin/dashboard';
+				}
 				this.setState({ LoginSucces: true });
 			})
 			.catch((err) => {
@@ -33,7 +36,7 @@ export class Login extends Component {
 	};
 
 	render() {
-		const token = localStorage.getItem('token');
+		const token = localStorage.getItem('resToken');
 		if (token) {
 			return <Redirect to='/admin/dashboard' />;
 		}

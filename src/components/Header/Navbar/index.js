@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import {
@@ -13,10 +12,8 @@ import {
 	FaSitemap,
 	FaTimes,
 } from 'react-icons/fa';
-import { IconContext } from 'react-icons/lib';
 import Register from '../../Body/Register/index';
 import logo from '../../../images/logo1.png';
-import CartButtons from './CartButtons';
 import styled from 'styled-components';
 import {
 	FaBehance,
@@ -56,13 +53,7 @@ function Navbar() {
 									<FaCentos />
 								</span>
 							</Link>
-							{/* <Link to='/cart' className='cart-btn' onClick={handleClick}>
-								Cart
-								<span className='cart-container'>
-									<FaShoppingCart />
-									<span className='cart-value'>{3}</span>
-								</span>
-							</Link> */}
+
 							<Link
 								to='/get/product'
 								className='cart-btn'
@@ -89,7 +80,7 @@ function Navbar() {
 			</NavContainer>
 			<hr />
 		</>
-	) : resToken && !customerToken ? (
+	) : resToken && customerToken=="undefined" ? (
 		<>
 			<NavContainer>
 				<div className='nav-center'>
@@ -147,7 +138,7 @@ function Navbar() {
 			</NavContainer>
 			<hr />
 		</>
-	) : customerToken && !resToken ? (
+	) : customerToken && resToken=="undefined" ? (
 		<>
 			<NavContainer>
 				<div className='nav-center'>
@@ -170,7 +161,6 @@ function Navbar() {
 								Cart
 								<span className='cart-container'>
 									<FaShoppingCart />
-									<span className='cart-value'>{3}</span>
 								</span>
 							</Link>
 							<Link
@@ -178,10 +168,9 @@ function Navbar() {
 								className='cart-btn'
 								onClick={handleClick}
 							>
-								Products
+								Restaurants
 								<span className='cart-container'>
-									<FaShoppingCart />
-									<span className='cart-value'>{3}</span>
+									<FaProductHunt />
 								</span>
 							</Link>
 							<Link
@@ -208,7 +197,51 @@ function Navbar() {
 			<hr />
 		</>
 	) : (
-		<div>errro</div>
+		<>
+			<NavContainer>
+				<div className='nav-center'>
+					<div className='nav-header' onClick={handleClick}>
+						<Link to='/'>
+							<img src={logo} alt='bhojmandu' />
+						</Link>
+
+						<div className='menu-icon' onClick={handleClick}>
+							{click ? <FaTimes /> : <FaBars />}
+						</div>
+						<ul className={click ? 'nav-menu active' : 'nav-menu'}>
+							<Link to='/' className='cart-btn' onClick={closeMobileMenu}>
+								Home
+								<span className='cart-container'>
+									<FaCentos />
+								</span>
+							</Link>
+
+							<Link
+								to='/get/product'
+								className='cart-btn'
+								onClick={handleClick}
+							>
+								Restaurants
+								<span className='cart-container'>
+									<FaShoppingCart />
+								</span>
+							</Link>
+							<Link
+								to='/body/login'
+								className='cart-btn'
+								onClick={closeMobileMenu}
+							>
+								Login
+								<span className='cart-container'>
+									<FaUserPlus />
+								</span>
+							</Link>
+						</ul>
+					</div>
+				</div>
+			</NavContainer>
+			<hr />
+		</>
 	);
 }
 

@@ -5,10 +5,12 @@ import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 import logo from '../../../images/logo1.png';
+import { toast } from 'react-toastify';
 class Register extends Component {
 	state = {
 		fname: '',
 		lname: '',
+		number: '',
 		email: '',
 		password: '',
 	};
@@ -17,16 +19,18 @@ class Register extends Component {
 			fname: this.state.fname,
 			lname: this.state.lname,
 			email: this.state.email,
+			number: this.state.number,
 			password: this.state.password,
 		};
 		axios
 			.post('http://localhost:4000/customer/auth/register', data)
 			.then((res) => {
-				console.log(res);
-				console.log(data);
-			});
-	};
-
+				window.location.href = '/body/login';
+				toast('registered Successfully')
+				})
+				.catch((response,err) => {
+					toast("Please enter every data correctly")
+			},)};
 	render() {
 		return (
 			<div>
@@ -67,6 +71,19 @@ class Register extends Component {
 											value={this.state.lname}
 											onChange={(event) => {
 												this.setState({ lname: event.target.value });
+											}}
+										/>
+									</div><div className='form-group'>
+										<input
+											type='text'
+											
+										
+											className='form-control form-control-lg'
+											id='exampleInputEmail11'
+											placeholder='Number'
+											value={this.state.number}
+											onChange={(event) => {
+												this.setState({ number: event.target.value });
 											}}
 										/>
 									</div>

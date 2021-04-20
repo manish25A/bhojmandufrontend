@@ -89,40 +89,6 @@ a {
 	text-decoration: none;
 }
 
-/* nav {
-  display: flex;
-  justify-content: space-around;
-  min-height: 8vh;
-  position: absolute;
-  width: 100%;
-  align-items: center;
-}
-.logo {
-  display: flex;
-}
-
-.navLinks {
-  display: flex;
-  list-style: none;
-  justify-content: space-around;
-  width: 50%;
-}
-
-.container {
-  position: relative;
-}
-.homepage {
-  margin-top: 10vh;
-  margin-bottom: 10vh;
-} */
-/* .main {
-  background: radial-gradient(at center center, #2d7e9270 0%, #1c40617c 100%),
-    url('./Public/Images/vetements.jpg');
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  margin-top: 10vh;
-} */
 
 /*IndexPage css*/
 body {

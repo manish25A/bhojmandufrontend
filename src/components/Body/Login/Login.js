@@ -21,22 +21,30 @@ export class Login extends Component {
 			.post('http://localhost:4000/customer/auth/login', this.state)
 			.then((response) => {
 				console.log(response);
-				localStorage.setItem('customerToken', response.data.token);
-				localStorage.setItem('id', response.data.id);
-				localStorage.setItem('role', response.data.role);
-				toast('Login Successful ');
-				window.location.href = '/';
-				this.setState({ LoginSucces: true });
+				if (response.data.token) {
+					localStorage.setItem('customerToken', response.data.token);
+					localStorage.setItem('resToken', response.data.vendorToken);
+					localStorage.setItem('id', response.data.id);
+					this.setState({ LoginSucces: true });
+					if (response.data.token) {
+						window.location.href = '/body/login';
+
+					}
+					toast('Login Successful');
+				} else {
+					toast('Wrong password')
+				}
 			})
-			.catch((err) => {
-				console.log(err.response);
+			.catch((response, err) => {
+				toast("Please enter correct email and password")
+
 			});
 	};
 
 	render() {
-		const token = localStorage.getItem('token');
+		const token = localStorage.getItem('customerToken');
 		if (token) {
-			return <Redirect to='/' />;
+			return <Redirect to="/" />;
 		}
 		return (
 			<div>

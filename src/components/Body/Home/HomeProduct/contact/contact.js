@@ -7,9 +7,7 @@ const Contact = () => {
 				<h3>Contact US</h3>
 				<div className='content'>
 					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
-						sint unde quaerat ratione soluta veniam provident adipisci cumque
-						eveniet tempore?
+						Choose from various restaurants and choose food from here. If you got any problem or request any feature just enter your email and subscribe. We will reply back to you
 					</p>
 					<form className='contact-form'>
 						<input
