@@ -7,24 +7,20 @@ export const services = [
 		icon: <GiCompass />,
 		title: 'Fast',
 		text:
-			'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
-	},
+			'Get Your food quickly and faster',
+		},
 	{
 		id: 2,
 		icon: <GiDiamondHard />,
 		title: 'Reliable',
 		text:
-			'Lorem ipsum, dolor sit amet consectetur  Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
+			'Get products from us in a reliable way',
 	},
 	{
 		id: 3,
 		icon: <GiStabbedNote />,
 		title: 'Secure',
 		text:
-			'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
+			'Your food is secure and will be delivered on time',
 	},
 ];
-
-export const products_url = 'https://localhost:4000/product/';
-
-export const single_product_url = `https://localhost:4000/product/:id`;

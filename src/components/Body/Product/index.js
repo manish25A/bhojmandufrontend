@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
-// import {
-// 	ProductsContainer,
-// 	ProductWrapper,
-// 	ProductsHeading,
-// 	ProductTitle,
-// 	ProductCard,
-// 	ProductImg,
-// 	ProductInfo,
-// 	ProductDesc,
-// 	ProductPrice,
-// 	ProductButton,
-// 	FavouriteButton,
-// } from './ProductsElements';
+
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { FaSearch } from 'react-icons/fa';
+import PageHero from '../../Cart/PageHero';
+const token = localStorage.getItem('customerToken');
 
 export default class Products extends Component {
 	state = {
@@ -42,34 +32,19 @@ export default class Products extends Component {
 				console.log(err.response);
 			});
 	}
-	addToCart = (id, event) => {
-		event.preventDefault();
-		axios
-			.post('http://localhost:90/cartitem/insert/' + id, {}, this.state.config)
-			.then((response) => {
-				if (response.data.success) {
-					toast.success(response.data.message, {
-						autoClose: 1000,
-					});
-					// window.location.href = '/cartitem/showall' + id;
-				} else {
-					toast.error(response.data.message);
-				}
-			})
-			.catch((err) => {
-				toast.error(err.response.data.message);
-			});
-	};
 	render() {
 		return (
-			<Wrapper>
+
+			<Wrapper className="page">
+				<PageHero title='Products'/>
+
 				<div className='products-container'>
 					{this.state.products.length > 0 ? (
 						this.state.products.map((productDisplay) => {
 							return (
 								<Wrapper>
 									<div className='container'>
-										<img src={productDisplay.image} alt='logo' />
+										<img src={"http://localhost:4000/uploads/" + productDisplay.photo} alt='logo' />
 										<Link
 											to={`/single/product/${productDisplay.vendorName}`}
 											className='link'
@@ -158,6 +133,7 @@ const Wrapper = styled.article`
 	}
 	img {
 		width: 100%;
+
 		display: block;
 		object-fit: cover;
 		border-radius: var(--radius);
@@ -210,6 +186,7 @@ const Wrapper = styled.article`
 	}
 
 	.products-container {
+		margin-top:5rem;
 		display: grid;
 		gap: 2rem 1.5rem;
 	}

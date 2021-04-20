@@ -5,9 +5,10 @@ const CartColumns = () => {
 		<Wrapper>
 			<div className='content'>
 				<h5>item</h5>
+				<h5>description</h5>
 				<h5>price</h5>
-				<h5>quantity</h5>
-				<h5>subtotal</h5>
+				<h5>checkout</h5>
+
 				<span></span>
 			</div>
 			<hr />
@@ -24,6 +25,7 @@ const Wrapper = styled.div`
 			grid-template-columns: 316px 1fr 1fr 1fr auto;
 			justify-items: center;
 			column-gap: 1rem;
+			margin-right:25px;
 			h5 {
 				color: var(--clr-grey-5);
 				font-weight: 400;

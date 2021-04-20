@@ -3,6 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import logo from '../../../images/logo1.png';
+import image from '../../../images/sellyourfood.png';
+
+
 export function Home() {
 	return (
 		<div className='App'>
@@ -12,12 +15,12 @@ export function Home() {
 						Bhojmandu <br />
 					</h1>
 					<p>Get Your food cooked by our partners</p>
-					<Link to='/products' className='btn hero-btn'>
+					<Link to='/get/product' className='btn hero-btn'>
 						shop now
 					</Link>
 				</article>
 				<article className='img-container'>
-					<img src={logo} alt='nice table' className='main-img' />
+					<img src={image} alt='nice table' className='main-img' />
 					<img src={logo} alt='person working' className='accent-img' />
 				</article>
 			</Wrapper>
@@ -61,7 +64,7 @@ const Wrapper = styled.section`
 			width: 100%;
 			height: 550px;
 			position: relative;
-			border-radius: var(--radius);
+			border-radius: 2rem;
 			display: block;
 			object-fit: cover;
 		}
@@ -80,8 +83,8 @@ const Wrapper = styled.section`
 			height: 80%;
 			background: var(--clr-primary-9);
 			bottom: 0%;
-			left: -8%;
-			border-radius: var(--radius);
+			left: 8%;
+			border-radius: var(--radius-9);
 		}
 	}
 `;

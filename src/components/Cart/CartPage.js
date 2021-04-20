@@ -11,15 +11,18 @@ import {
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../../assets/css/bootstrap.min.css';
-import { ToastContainer, toast } from 'react-toastify';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './Cart.css';
 import CartColumns from './CartColumns';
 import PageHero from './PageHero';
 import { formatPrice } from '../../utils/helpers';
-import { FaTrash } from 'react-icons/fa';
+import { FaCartPlus, FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
-export default class CartItem extends Component {
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure();
+
+export default class CartPage extends Component {
 	state = {
 		cartProduct: [],
 
@@ -28,17 +31,44 @@ export default class CartItem extends Component {
 				authorization: `Bearer ${localStorage.getItem('customerToken')}`,
 			},
 		},
+		fname: '',
+		price: '',
+		desc: '',
 	};
-
+	toadmin = (id, event) => {
+		console.log(id);
+		event.preventDefault();
+		axios
+			.post('http://localhost:4000/cart/' + id, {}, this.state.config)
+			.then((response) => {
+				if (response.data.success) {
+					toast.success(response.data.message, {
+						autoClose: 1000,
+					});
+				} else {
+					toast.error(response.data.message);
+				}
+			})
+			.catch((err) => {
+				toast.error(err.response.data.message);
+			});
+	};
 	removeProduct = (id) => {
 		axios
 			.delete('http://localhost:4000/cart/' + id, this.state.config)
 			.then((response) => {
 				console.log(response);
 				window.location.href = '/cart';
+				if (response.data.success) {
+					toast.success(response.success, {
+						autoClose: 1000,
+					});
+				} else {
+					toast.error(response.data.message);
+				}
 			})
 			.catch((err) => {
-				console.log(err.response);
+				toast.error(err.response.data.message);
 			});
 	};
 	componentDidMount() {
@@ -61,135 +91,65 @@ export default class CartItem extends Component {
 
 				<CartColumns />
 				{this.state.cartProduct.map((item) => {
-					var id = item._id;
 					return (
 						<Wrapper>
 							<div className='title'>
 								{/* <img src={image} alt={name} /> */}
 								<div>
-									<h5 className='name'>{item.customerId.fname}</h5>
-									{/* <p className='color'>
-										color :
-										<span style={{ background: color }} />
-									</p> */}
-									<h5 className='price-small'>
-										{formatPrice(item.itemId.price)}
-									</h5>
+									<h5 className='name'>{item.itemId[0].name}</h5>
+									
+									<h5 className='price-small'>{item.itemId[0].desc}</h5>
 								</div>
 							</div>
-							<h5 className='price'>{formatPrice(item.itemId.price)}</h5>
-							{/* <AmountButtons
-								amount={amount}
-								increase={increase}
-								decrease={decrease}
-							/> */}
-							<h5 className='subtotal'>{formatPrice(item.itemId.price * 1)}</h5>
+							<h5 className='price'>{item.itemId[0].desc}</h5>
+							<h5 className='subtotal'>{formatPrice(item.itemId[0].price)}</h5>
 							<button
-								className='remove-btn'
+								className='checkout-btn'
 								onClick={this.removeProduct.bind(this, item._id)}
 							>
-								<FaTrash />
+								<FaCartPlus />
 							</button>
 						</Wrapper>
 					);
 				})}
 				<hr />
 
-				{/* <CartTotals /> */}
-				{/* <div class='cartItem'>
-					<div class='cart_section'>
-						<div class='container-fluid'>
-							<div class='row'>
-								<div class='col-lg-10 offset-lg-1'>
-									<div class='cart_title'>Shopping Cart</div>
-
-									{this.state.cartProduct.map((productdata) => {
-										return (
-											<div class='cart_container'>
-												<div class='cart_items'>
-													<ul class='cart_list'>
-														<li class='cart_item clearfix'>
-															<div class='cart_item_image'>
-																{/* <img
-																src={
-																	'http://localhost:90/' +
-																	productdata.CartItemid.ProductImage
-																}
-																alt={productdata.CartItemid.ProductImage}
-																class='rounded'
-																width='200'
-																height='120'
-															/> */}
-				{/* </div>
-
-															<div class='cart_item_info d-flex flex-md-row flex-column justify-content-between'>
-																<div class='cart_item_name cart_info_col'>
-																	<div class='cart_item_title'>Name</div>
-																	<div class='cart_item_text'>
-																		{productdata.itemId.desc}
-																	</div>
-																</div>
-																<div class='cart_item_color cart_info_col'>
-																	<div class='cart_item_title'>Color</div>
-																	<div class='cart_item_text'>
-																		<span style={{ mystyle }}></span>
-																		{productdata.itemId.name}
-																	</div>
-																</div>
-															</div>
-														</li>
-													</ul>
-												</div>
-												<div class='cart_buttons'>
-													{' '}
-													<button
-														type='button'
-														class='button cart_button_clear'
-														onClick={this.deleteProduct.bind(
-															this,
-															productdata._id
-														)}
-													>
-														{' '}
-														Delete Item
-													</button>{' '}
-													<button
-														type='button'
-														class='button cart_button_checkout'
-													>
-														Proceed To Checkout
-													</button>{' '}
-												</div>
-											</div>
-										);
-									})}
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> */}
+				<CartTotals />
 			</main>
 		);
 	}
 }
+
+const CartTotals = () => {
+	var shipping_fee = 100;
+	return (
+		<main>
+
+		
+		<Checkout>
+			<div>
+				<article>
+					<hr />
+					<h4>
+						Shipping fee :<span>{formatPrice(shipping_fee)}</span>
+					</h4>
+				</article>
+			</div>
+		</Checkout>
+		</main>
+	);
+};
+
 export const Wrapper = styled.main`
-	.empty {
-		text-align: center;
-		h2 {
-			margin-bottom: 1rem;
-			text-transform: none;
-		}
-	}
+
 	.subtotal {
 		display: none;
 	}
-	.price {
-		display: none;
-	}
+
 	display: grid;
 	grid-template-columns: 200px auto auto;
 	grid-template-rows: 75px;
-	gap: 3rem 1rem;
+	gap:  1rem;
 	justify-items: center;
 	margin-bottom: 3rem;
 	align-items: center;
@@ -245,7 +205,7 @@ export const Wrapper = styled.main`
 			font-size: 1rem;
 		}
 	}
-	.remove-btn {
+	.checkout-btn {
 		color: var(--clr-white);
 		background: transparent;
 		border: transparent;
@@ -313,4 +273,30 @@ export const Wrapper = styled.main`
 			}
 		}
 	}
+`;
+
+const Checkout = styled.section`
+	margin-top: 3rem;
+	display: flex;
+	justify-content: center;
+	article {
+		border: 1px solid var(--clr-grey-8);
+		border-radius: var(--radius);
+	}
+	h4,
+	h5,
+	p {
+		display: grid;
+		grid-template-columns: 200px 1fr;
+	}
+	p {
+		text-transform: capitalize;
+	}
+	h4 {
+		margin-top: 2rem;
+	}
+	@media (min-width: 776px) {
+		justify-content: flex-end;
+	}
+	
 `;

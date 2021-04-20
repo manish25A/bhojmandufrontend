@@ -7,12 +7,10 @@ const Services = () => {
 			<div className='section-center'>
 				<article className='header'>
 					<h3>
-						custom furniture <br /> built only for you
+						Food Delivery <br /> We deliver for you
 					</h3>
 					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-						dolorum debitis consectetur reprehenderit non aliquam voluptates
-						dolore aut vero consequuntur.
+						Order food in fast way using our web and mobile application with just simple signup and login.
 					</p>
 				</article>
 				<div className='services-center'>

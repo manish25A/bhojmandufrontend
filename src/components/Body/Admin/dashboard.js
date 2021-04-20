@@ -20,7 +20,7 @@ export default class ResDashboard extends Component {
 	componentDidMount() {
 		const token = this.state.config;
 		axios
-			.get('http://localhost:4000/vendor/auth/me', token)
+			.get('http://localhost:4000/vendor/auth/get', token)
 			.then((res) => {
 				console.log(res.data.data);
 				this.setState({
