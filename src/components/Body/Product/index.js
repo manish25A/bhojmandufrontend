@@ -20,7 +20,7 @@ export default class Products extends Component {
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:4000/vendor/auth/')
+			.get('https://bhojmanduserver.herokuapp.com/vendor/auth/')
 			.then((response) => {
 				console.log(response);
 				this.setState({
